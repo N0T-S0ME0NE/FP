@@ -93,7 +93,4 @@ def main():
         else:
             print("Opțiune invalidă! Vă rugăm să alegeți un număr între 1 și 4.")
 
-
-# Punctul de intrare în program
-if __name__ == "__main__":
-    main()
+main()
