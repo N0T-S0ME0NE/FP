@@ -1,7 +1,3 @@
-# ==========================================
-# Funcții ajutătoare (verificări proprietăți)
-# ==========================================
-
 def este_strict_crescator(secventa):
     """Verifică dacă o secvență este strict crescătoare (Proprietatea 1)"""
     if len(secventa) <= 1:
@@ -23,10 +19,6 @@ def toate_egale(secventa):
             return False
     return True
 
-
-# ==========================================
-# Algoritmul de găsire a secvenței maxime
-# ==========================================
 
 def gaseste_secventa_maxima(lista, functie_verificare):
     """
@@ -52,9 +44,6 @@ def gaseste_secventa_maxima(lista, functie_verificare):
     return secventa_maxima
 
 
-# ==========================================
-# Interfața cu utilizatorul (Meniu Consolă)
-# ==========================================
 
 def citeste_lista():
     """Citește de la tastatură o listă de numere întregi introduse pe o singură linie."""
