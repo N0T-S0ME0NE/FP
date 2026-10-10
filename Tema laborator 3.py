@@ -63,7 +63,7 @@ def main():
                     print("Eroare: Lista este goală! Citiți mai întâi lista de numere!")
                 else:
                     y = secv_max(V, P9)
-                    print(f"Secvența maximă pentru o valoare care se repeta într-un șir de 3 elemente consecutive este: {y}, având o lungime de {len(y)} numere")
+                    print(f"Secvența maximă pentru o valoare care se repeta într-un șir de 3 elemente consecutive este: {y}")
             case "4":
                 print("Programul se va închide...")
                 break
