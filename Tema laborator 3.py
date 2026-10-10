@@ -32,9 +32,9 @@ def secv_max(V,Proprietate):
     return secv_mx
 
 def citeste_lista():
-    W=input("Introduceți numerele separate prin spațiu: ")
-    nr=[int(x) for x in W.split()]
-    return nr
+    nr=input("Introduceți numerele separate prin spațiu: ")
+    W=[int(x) for x in nr.split()]
+    return W
 
 def meniu():
     print("\n--- MENIU ---")
