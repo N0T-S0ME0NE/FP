@@ -56,13 +56,13 @@ def main():
                 if not V:
                     print("Eroare: Lista este goală! Citiți mai întâi lista de numere!")
                 else:
-                    x = secv_max(V, P1)
+                    x=secv_max(V, P1)
                     print(f"Secvența maximă de numere strict crescătoare este: {x}")
             case "3":
                 if not V:
                     print("Eroare: Lista este goală! Citiți mai întâi lista de numere!")
                 else:
-                    y = secv_max(V, P9)
+                    y=secv_max(V, P9)
                     print(f"Secvența maximă pentru o valoare care se repeta într-un șir de 3 elemente consecutive este: {y}")
             case "4":
                 print("Programul se va închide...")
