@@ -9,6 +9,8 @@ def P1(V):
 def P9(V):
     if len(V)==1:
         return True
+    if len(V)==2:
+        return V[0]==V[1]
     for i in range(0,len(V)-2):
         a=V[i]
         b=V[i+1]
@@ -20,7 +22,7 @@ def P9(V):
 def secv_max(V,Proprietate):
     if not V:
         return []
-    secv_mx=[]
+    secv_mx=[V[0]]
     for i in range(0,len(V)):
         for j in range(i,len(V)):
             sub_list=V[i:j+1]
