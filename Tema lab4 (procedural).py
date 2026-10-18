@@ -300,6 +300,7 @@ def run_all_tests():
     test_searches()
     test_reports()
     test_filters()
+run_all_tests()
 
 # Meniu
 
@@ -418,7 +419,7 @@ def run_command(command, expenses):
         case _:
             print("Eroare: comandă invalidă")
 
-def run():
+def main():
     expenses=[]
     finished=False
     while not finished:
@@ -434,5 +435,4 @@ def run():
         except EOFError:
             finished=True
     print("Programul se va închide...")
-run_all_tests()
-run()
+main()
