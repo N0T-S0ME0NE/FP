@@ -36,7 +36,7 @@ def print_expenses(expenses):
 
 def print_menu():
     print("""
---- Cheltuieli de familie (iterația 1) ---
+--- Cheltuieli de familie ---
  1. Adaugă o nouă cheltuială
  2. Actualizează o cheltuială
  3. Șterge cheltuielile pentru o zi dată
