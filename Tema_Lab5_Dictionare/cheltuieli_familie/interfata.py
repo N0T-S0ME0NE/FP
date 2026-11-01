@@ -30,13 +30,13 @@ def print_expenses(expenses):
     if len(expenses)==0:
         print("Nu există cheltuieli.")
         return
-    for expense in expenses:
+    for expense in expenses.values():
         print("  Ziua %2d | %10.2f lei | %s" % (get_day(expense),get_amount(expense),get_type(expense)))
     print("Total: " + str(len(expenses)) + " cheltuieli")
 
 def print_menu():
     print("""
---- Cheltuieli de familie (iterația 1) ---
+--- Cheltuieli de familie ---
  1. Adaugă o nouă cheltuială
  2. Actualizează o cheltuială
  3. Șterge cheltuielile pentru o zi dată
