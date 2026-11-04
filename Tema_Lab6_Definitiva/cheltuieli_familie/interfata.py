@@ -139,28 +139,41 @@ def ui_load_sample_data(expenses,history):
     count=load_sample_data(expenses,history)
     print("Au fost adăugate " + str(count) + " cheltuieli de test.")
 
-COMMANDS={
-    "1": ui_add_expense,
-    "2": ui_update_expense,
-    "3": ui_remove_by_day,
-    "4": ui_remove_by_interval,
-    "5": ui_remove_by_type,
-    "6": ui_find_greater_than,
-    "7": ui_find_before_day_less_than,
-    "8": ui_find_by_type,
-    "9": ui_total_for_type,
-    "10": ui_day_with_max_total,
-    "11": ui_find_by_amount,
-    "12": ui_sort_by_type,
-    "13": ui_filter_out_type,
-    "14": ui_filter_out_less_than,
-    "15": ui_undo,
-    "16": ui_print_all,
-    "17": ui_load_sample_data,
-}
-
 def run_command(command,expenses,history):
-    if command in COMMANDS:
-        COMMANDS[command](expenses,history)
-    else:
-        print("Eroare: comandă invalidă")
+    match command:
+        case "1":
+            ui_add_expense(expenses,history)
+        case "2":
+            ui_update_expense(expenses,history)
+        case "3":
+            ui_remove_by_day(expenses,history)
+        case "4":
+            ui_remove_by_interval(expenses,history)
+        case "5":
+            ui_remove_by_type(expenses,history)
+        case "6":
+            ui_find_greater_than(expenses,history)
+        case "7":
+            ui_find_before_day_less_than(expenses,history)
+        case "8":
+            ui_find_by_type(expenses,history)
+        case "9":
+            ui_total_for_type(expenses,history)
+        case "10":
+            ui_day_with_max_total(expenses,history)
+        case "11":
+            ui_find_by_amount(expenses,history)
+        case "12":
+            ui_sort_by_type(expenses,history)
+        case "13":
+            ui_filter_out_type(expenses,history)
+        case "14":
+            ui_filter_out_less_than(expenses,history)
+        case "15":
+            ui_undo(expenses,history)
+        case "16":
+            ui_print_all(expenses,history)
+        case "17":
+            ui_load_sample_data(expenses,history)
+        case _:
+            print("Eroare: comandă invalidă")

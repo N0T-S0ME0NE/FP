@@ -3,8 +3,8 @@ from cheltuieli_familie.teste import run_all_tests
 
 def main():
     run_all_tests()
-    expenses=[]     #lista
-    history=[]      #stările anterioare ale listei, folosite de Undo
+    expenses=[]
+    history=[]
     finished=0
     while not finished:
         print_menu()

@@ -354,7 +354,7 @@ def print_menu():
 15. Afișează toate cheltuielile
  0. Ieșire""")
 
-def run_command(command, expenses):
+def run_command(command,expenses):
     match command:
         case "1":
             day=read_int("Ziua (1-31): ")
@@ -421,18 +421,18 @@ def run_command(command, expenses):
 
 def main():
     expenses=[]
-    finished=False
+    finished=0
     while not finished:
         print_menu()
         try:
             command=input("Comandă: ").strip()
             if command=="0":
-                finished=True
+                finished=1
             else:
                 run_command(command,expenses)
         except ValueError as error:
             print("Eroare: " + str(error))
         except EOFError:
-            finished=True
+            finished=1
     print("Programul se va închide...")
 main()

@@ -1,8 +1,8 @@
-from .domeniu import CATEGORIES
-from .servicii import(
-    get_day,get_amount,get_type,add_expense,update_expense,remove_by_day,remove_by_interval,remove_by_type,
-    find_greater_than,find_before_day_less_than,find_by_type,total_for_type,day_with_max_total,find_by_amount,sort_by_type,remove_less_than
-)
+from .domeniu import CATEGORIES,get_day,get_amount,get_type
+from .servicii import (add_expense,update_expense,remove_by_day,remove_by_interval,remove_by_type,find_greater_than,find_before_day_less_than,
+                       find_by_type,find_by_amount,total_for_type,day_with_max_total,sort_by_type,filter_out_type,filter_out_less_than,load_sample_data)
+
+# Citire și Afișare
 
 def read_int(prompt):
     text=input(prompt).strip()
@@ -50,71 +50,123 @@ def print_menu():
 11. Tipărește cheltuielile cu o anumită sumă
 12. Tipărește cheltuielile sortate după tip
 13. Elimină toate cheltuielile de un anumit tip
-14. Elimină toate cheltuielile mai mici decât o sumă
+14. Elimină toate cheltuielile mai mici decât o sumă dată
 15. Afișează toate cheltuielile
+16. Încarcă 8 cheltuieli de test
  0. Ieșire""")
 
-def run_command(command, expenses):
+def ui_add_expense(expenses):
+    day=read_int("Ziua (1-31): ")
+    amount=read_amount("Suma: ")
+    expense_type=read_type()
+    add_expense(expenses,day,amount,expense_type)
+    print("Cheltuială adăugată.")
+
+def ui_update_expense(expenses):
+    day=read_int("Ziua (1-31): ")
+    amount=read_amount("Suma nouă: ")
+    expense_type=read_type()
+    update_expense(expenses,day,amount,expense_type)
+    print("Cheltuială actualizată.")
+
+def ui_remove_by_day(expenses):
+    day=read_int("Ziua de șters (1-31): ")
+    count=remove_by_day(expenses,day)
+    print("Au fost eliminate " + str(count) + " cheltuieli.")
+
+def ui_remove_by_interval(expenses):
+    start_day=read_int("Ziua de început (1-31): ")
+    end_day=read_int("Ziua de sfârșit (1-31): ")
+    count=remove_by_interval(expenses,start_day,end_day)
+    print("Au fost eliminate " + str(count) + " cheltuieli.")
+
+def ui_remove_by_type(expenses):
+    expense_type=read_type()
+    count=remove_by_type(expenses,expense_type)
+    print("Au fost eliminate " + str(count) + " cheltuieli.")
+
+def ui_find_greater_than(expenses):
+    amount=read_amount("Suma: ")
+    print_expenses(find_greater_than(expenses,amount))
+
+def ui_find_before_day_less_than(expenses):
+    amount=read_amount("Suma (mai mici decât): ")
+    day=read_int("Ziua (dinainte de): ")
+    print_expenses(find_before_day_less_than(expenses,day,amount))
+
+def ui_find_by_type(expenses):
+    expense_type=read_type()
+    print_expenses(find_by_type(expenses,expense_type))
+
+def ui_total_for_type(expenses):
+    expense_type=read_type()
+    total=total_for_type(expenses,expense_type)
+    print("Suma totală pentru %s: %.2f lei" % (expense_type,total))
+
+def ui_day_with_max_total(expenses):
+    result=day_with_max_total(expenses)
+    if result is None:
+        print("Nu există cheltuieli.")
+    else:
+        print("Ziua %d (total %.2f lei)" % (result[0],result[1]))
+
+def ui_find_by_amount(expenses):
+    amount=read_amount("Suma: ")
+    print_expenses(find_by_amount(expenses,amount))
+
+def ui_sort_by_type(expenses):
+    print_expenses(sort_by_type(expenses))
+
+def ui_filter_out_type(expenses):
+    expense_type=read_type()
+    print("Toate cheltuielile, fără cele de tipul '" + expense_type + "':")
+    print_expenses(filter_out_type(expenses,expense_type))
+
+def ui_filter_out_less_than(expenses):
+    amount=read_amount("Suma (nu se afișează cele mai mici decât): ")
+    print("Toate cheltuielile, fără cele mai mici decât " + str(amount) + " lei:")
+    print_expenses(filter_out_less_than(expenses,amount))
+
+def ui_print_all(expenses):
+    print_expenses(expenses)
+
+def ui_load_sample_data(expenses):
+    count=load_sample_data(expenses)
+    print("Au fost adăugate " + str(count) + " cheltuieli de test.")
+
+def run_command(command,expenses):
     match command:
         case "1":
-            day=read_int("Ziua (1-31): ")
-            amount=read_amount("Suma: ")
-            expense_type=read_type()
-            add_expense(expenses,day,amount,expense_type)
-            print("Cheltuială adăugată.")
+            ui_add_expense(expenses)
         case "2":
-            day=read_int("Ziua (1-31): ")
-            amount=read_amount("Suma nouă: ")
-            expense_type=read_type()
-            update_expense(expenses,day,amount,expense_type)
-            print("Cheltuială actualizată.")
+            ui_update_expense(expenses)
         case "3":
-            day=read_int("Ziua de șters (1-31): ")
-            count=remove_by_day(expenses,day)
-            print("Au fost eliminate " + str(count) + " cheltuieli.")
+            ui_remove_by_day(expenses)
         case "4":
-            start_day=read_int("Ziua de început (1-31): ")
-            end_day=read_int("Ziua de sfârșit (1-31): ")
-            count=remove_by_interval(expenses,start_day,end_day)
-            print("Au fost eliminate " + str(count) + " cheltuieli.")
+            ui_remove_by_interval(expenses)
         case "5":
-            expense_type=read_type()
-            count=remove_by_type(expenses,expense_type)
-            print("Au fost eliminate " + str(count) + " cheltuieli.")
+            ui_remove_by_type(expenses)
         case "6":
-            amount=read_amount("Suma: ")
-            print_expenses(find_greater_than(expenses,amount))
+            ui_find_greater_than(expenses)
         case "7":
-            amount=read_amount("Suma (mai mici decât): ")
-            day=read_int("Ziua (dinainte de): ")
-            print_expenses(find_before_day_less_than(expenses,day,amount))
+            ui_find_before_day_less_than(expenses)
         case "8":
-            expense_type=read_type()
-            print_expenses(find_by_type(expenses,expense_type))
+            ui_find_by_type(expenses)
         case "9":
-            expense_type=read_type()
-            total=total_for_type(expenses,expense_type)
-            print("Suma totală pentru %s: %.2f lei" % (expense_type,total))
+            ui_total_for_type(expenses)
         case "10":
-            result=day_with_max_total(expenses)
-            if result is None:
-                print("Nu există cheltuieli.")
-            else:
-                print("Ziua %d (total %.2f lei)" % (result[0],result[1]))
+            ui_day_with_max_total(expenses)
         case "11":
-            amount=read_amount("Suma: ")
-            print_expenses(find_by_amount(expenses,amount))
+            ui_find_by_amount(expenses)
         case "12":
-            print_expenses(sort_by_type(expenses))
+            ui_sort_by_type(expenses)
         case "13":
-            expense_type=read_type()
-            count=remove_by_type(expenses,expense_type)
-            print("Au fost eliminate " + str(count) + " cheltuieli.")
+            ui_filter_out_type(expenses)
         case "14":
-            amount=read_amount("Suma (se elimină cele mai mici decât): ")
-            count=remove_less_than(expenses,amount)
-            print("Au fost eliminate " + str(count) + " cheltuieli.")
+            ui_filter_out_less_than(expenses)
         case "15":
-            print_expenses(expenses)
+            ui_print_all(expenses)
+        case "16":
+            ui_load_sample_data(expenses)
         case _:
             print("Eroare: comandă invalidă")
