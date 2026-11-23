@@ -114,7 +114,7 @@ class Console:
         print("Clientul '"+client.get_name()+"' a fost șters.")
 
     def ui_search_clients(self):
-        clients=self._controller.search_clients(read_text("Caută (Nume sau CNP): "))
+        clients=self._controller.search_clients(read_text("Caută (nume, CNP sau ID): "))
         if len(clients)==0:
             print("Nu s-a găsit niciun client.")
         else:
