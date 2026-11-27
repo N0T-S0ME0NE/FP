@@ -68,8 +68,8 @@ def print_menu():
  11. Închiriază o carte           15. Cele mai închiriate cărți
  12. Returnează o carte           16. Clienți, ordonați după nume
  13. Cărți închiriate acum        17. Clienți, ordonați după număr
- 14. Încarcă date aleatoriu       18. Primii 20% clienți activi
-
+                                  18. Primii 20% clienți activi
+ 14. Încarcă date aleatoriu       19. Cărți și clienți fără închirieri
   0. Ieșire""")
 
 class Console:
@@ -179,6 +179,13 @@ class Console:
         print("Primii 20% dintre cei mai activi clienți:")
         print_client_stats(self._controller.get_most_active_clients())
 
+    def ui_report_never_rented(self):
+        books,clients=self._controller.get_never_rented()
+        print("Cărți care nu au fost niciodată închiriate:")
+        print_books(books)
+        print("Clienți care nu au închiriat niciodată o carte:")
+        print_clients(clients)
+
     def run_command(self,command):
         match command:
             case "1":
@@ -217,6 +224,8 @@ class Console:
                 self.ui_report_clients_by_rentals()
             case "18":
                 self.ui_report_top_clients()
+            case "19":
+                self.ui_report_never_rented()
             case _:
                 print("Eroare: comandă invalidă")
 

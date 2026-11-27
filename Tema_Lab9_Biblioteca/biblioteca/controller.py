@@ -1,6 +1,5 @@
 import calendar
 import random
-
 from .domeniu import MAX_TEXT,CNP_WEIGHTS,ValidationError,validate_id,validate_text,create_book,create_client,create_rental
 
 class ControllerError(Exception):
@@ -19,7 +18,7 @@ BOOK_TITLE_PATTERNS=(
     ("Răsăritul",("speranței","soarelui","vieții")),
 )
 BOOK_TYPES=("Nuvelă","Roman","Poezie","Schiță","Povestire","Basm","Dramă","Eseu")
-FIRST_NAMES=("Ana","Andrei","Elena","Ioana","Maria","Mihai","Radu","Ștefan","Teodora","Vlad")
+FIRST_NAMES=("Ana","Andrei","Elena","Ioana","Maria","Mihai","Radu","Cristian","Teodora","Vlad")
 SURNAMES=("Dumitrescu","Georgescu","Ionescu","Marin","Popa","Popescu","Radu","Stan","Vasilescu","Zamfir")
 AUTHOR_FIRST_NAMES=("Alin","Cătălin","Daria","Emil","Florin","Irina","Laurențiu","Oana","Sorin","Veronica")
 AUTHOR_SURNAMES=("Bălan","Bărbulescu","Cernat","Dobre","Enache","Filip","Grigorescu","Iliescu","Lupu","Matei")
@@ -195,6 +194,17 @@ class Controller:
     def get_most_active_clients(self):
         clients=self.get_clients_by_rentals()
         return clients[:top_count(len(clients),TOP_PERCENT)]
+
+    def get_never_rented(self):
+        books=[]
+        for book in self._book_repo.get_all():
+            if not self._rental_repo.has_rented_book(book.get_id()):
+                books.append(book)
+        clients=[]
+        for client in self._client_repo.get_all():
+            if not self._rental_repo.has_client_rentals(client.get_id()):
+                clients.append(client)
+        return (books,clients)
 
     # Date de test
 

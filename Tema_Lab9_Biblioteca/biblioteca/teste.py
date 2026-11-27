@@ -490,6 +490,50 @@ def test_most_active_clients():
     assert top[0][0].get_name()=="Popescu Ion"
     assert top[0][1]==3
 
+def test_never_rented():
+    controller=make_controller()
+    assert controller.get_never_rented()==([],[])
+    controller=make_filled_controller()
+    books,clients=controller.get_never_rented()
+    assert [book.get_id() for book in books]==[1,2]
+    assert [client.get_id() for client in clients]==[1,2]
+    controller.rent_book(1,1)
+    books,clients=controller.get_never_rented()
+    assert [book.get_id() for book in books]==[2]
+    assert [client.get_id() for client in clients]==[2]
+    controller.return_book(1)
+    books,clients=controller.get_never_rented()
+    assert [book.get_id() for book in books]==[2]
+    assert [client.get_id() for client in clients]==[2]
+
+def test_never_rented_after_deletion():
+    controller=make_filled_controller()
+    controller.rent_book(1,1)
+    controller.return_book(1)
+    controller.delete_client(1)
+    controller.add_client(1,"Alt Client",CNP1)
+    books,clients=controller.get_never_rented()
+    assert [book.get_id() for book in books]==[2]
+    assert [client.get_id() for client in clients]==[2,1]
+
+    controller.rent_book(1,1)
+    controller.return_book(1)
+    controller.delete_book(1)
+    controller.add_book(1,"Alta","Descriere","Autor")
+    books,clients=controller.get_never_rented()
+    assert [book.get_id() for book in books]==[2,1]
+    assert [client.get_id() for client in clients]==[2]
+
+def test_console_never_rented():
+    console=Console(make_filled_controller())
+    with patch("builtins.print") as print_mock:
+        console.run_command("19")
+    output="\n".join(str(call.args[0]) for call in print_mock.call_args_list if call.args)
+    assert "Cărți care nu au fost niciodată închiriate:" in output
+    assert "Ion" in output
+    assert "Clienți care nu au închiriat niciodată o carte:" in output
+    assert "Popescu Ion" in output
+
 def test_reports_from_sample_data():
     controller=make_controller()
     controller.load_sample_data(5)
@@ -543,5 +587,8 @@ def run_all_tests():
     test_clients_by_name()
     test_clients_by_rentals()
     test_most_active_clients()
+    test_never_rented()
+    test_never_rented_after_deletion()
+    test_console_never_rented()
     test_reports_from_sample_data()
     print("Toate testele au trecut cu succes!")

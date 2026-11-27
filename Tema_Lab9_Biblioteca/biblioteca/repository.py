@@ -83,9 +83,19 @@ class ClientRepository(Repository):
 class RentalRepository:
     def __init__(self):
         self._rentals=[]
+        self._rented_book_ids=set()
+        self._client_ids_with_rentals=set()
 
     def add(self,rental):
         self._rentals.append(rental)
+        self._rented_book_ids.add(rental.get_book_id())
+        self._client_ids_with_rentals.add(rental.get_client_id())
+
+    def has_rented_book(self,book_id):
+        return book_id in self._rented_book_ids
+
+    def has_client_rentals(self,client_id):
+        return client_id in self._client_ids_with_rentals
 
     def find_active_by_book(self,book_id):
         for rental in self._rentals:
@@ -130,6 +140,7 @@ class RentalRepository:
             if rental.get_book_id()!=book_id:
                 kept.append(rental)
         self._rentals=kept
+        self._rented_book_ids.discard(book_id)
 
     def remove_by_client(self,client_id):
         kept=[]
@@ -137,3 +148,4 @@ class RentalRepository:
             if rental.get_client_id()!=client_id:
                 kept.append(rental)
         self._rentals=kept
+        self._client_ids_with_rentals.discard(client_id)
